@@ -1,0 +1,19 @@
+{
+  "name": "wallpaper",
+  "version": "0.0.1",
+  "description": "Wallpaper Engine alternative for Ubuntu",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "package-linux": "electron-packager . wallpaper --overwrite --asar=true --platform=linux --arch=x64 --prune=true --out=release-builds"
+  },
+  "author": "Tubinex",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^21.1.1"
+  },
+  "devDependencies": {
+    "electron-packager": "^16.0.0"
+  }
+}
