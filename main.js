@@ -42,11 +42,17 @@ config = loadConfig();
 const getWallpapers = (callback) => {
 
     console.log(wallpaperPath);
-    fs.readdir(wallpaperPath, (err, files) => {
+    if (fs.existsSync(wallpaperPath)){
+        fs.readdir(wallpaperPath, (err, files) => {
 
-        callback(files);
+            callback(files);
+    
+        });
+    } else {
+        
+        callback([]);
 
-    });
+    }
 
 }
 
@@ -97,6 +103,12 @@ ipcMain.on('set-wallpaper', (event, data) => {
         type: 'video',
         src: `file:///${config.src}`
     });
+
+});
+
+ipcMain.on('open-wallpaper-folder', (event, data) => {
+
+    shell.openPath(wallpaperPath);
 
 });
 
@@ -174,15 +186,17 @@ const createWallpaperWindow = () => {
     wallpaperWindow.on('ready-to-show', () => {
 
         getWallpapers((wallpapers) => {
-            if (config.src == null){
+            if (config.src == null && wallpapers.length > 0){
 
                 config.src = path.join(wallpaperPath, wallpapers[Math.floor(Math.random() * wallpapers.length)]);
 
             }
-            wallpaperWindow.webContents.send('change-wallpaper', {
-                type: 'video',
-                src: `file:///${config.src}`
-            });
+            if (config.src != null && fs.existsSync(config.src)){
+                wallpaperWindow.webContents.send('change-wallpaper', {
+                    type: 'video',
+                    src: `file:///${config.src}`
+                });
+            }
         });
     });
 }
