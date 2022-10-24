@@ -64,16 +64,19 @@ const makeTray = () => {
             },
         },
         {
+            label: 'Wallpapers',
+            click: () => {
+                shell.openPath(wallpaperPath);
+            },
+        },
+        {
+            type: 'separator'
+        },
+        {
             label: 'Quit',
             click: () => {
                 app.isQuiting = true;
                 app.quit();
-            },
-        },
-        {
-            label: 'Wallpapers',
-            click: () => {
-                shell.openPath(wallpaperPath);
             },
         },
     ]);
