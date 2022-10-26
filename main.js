@@ -112,6 +112,12 @@ ipcMain.on('open-wallpaper-folder', (event, data) => {
 
 });
 
+ipcMain.on('print', (event, data) => {
+
+    console.log(data);
+
+})
+
 const createWallpaperPicker = () => {
 
     wallpaperPicker = new BrowserWindow({
@@ -199,6 +205,7 @@ const createWallpaperWindow = () => {
             }
         });
     });
+
 }
 
 app.whenReady().then(() => {
