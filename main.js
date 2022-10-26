@@ -1,4 +1,4 @@
-const { app, BrowserWindow, screen, Tray, Menu, shell, ipcMain } = require('electron');
+const { app, BrowserWindow, screen, Tray, Menu, shell, ipcMain, dialog } = require('electron');
 const fs = require('fs');
 const path = require('path')
 
@@ -74,6 +74,22 @@ const makeTray = () => {
             click: () => {
                 shell.openPath(wallpaperPath);
             },
+        },
+        {
+            label: 'Import',
+            click: () => {
+                dialog.showOpenDialog({
+                    properties: ['openFile'],
+                    filters: [
+                        { name: "Movies", extensions: ["mkv", "avi", "mp4"] }
+                    ],
+                }).then(function (response) {
+                    if (!response.canceled) {
+                        console.log(response.filePaths[0]);
+                        fs.copyFileSync(response.filePaths[0], path.join(wallpaperPath, path.basename(response.filePaths[0])));
+                    }
+                });
+            }
         },
         {
             type: 'separator'
