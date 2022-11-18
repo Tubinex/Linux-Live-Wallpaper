@@ -1,4 +1,5 @@
 const { app, BrowserWindow, screen, Tray, Menu, shell, ipcMain, dialog } = require('electron');
+const child_process = require('child_process');
 const fs = require('fs');
 const path = require('path')
 
@@ -111,7 +112,6 @@ const makeTray = () => {
 
 ipcMain.on('set-wallpaper', (event, data) => {
 
-    console.log(data);
     config.src = data.src;
     saveConfig();
 
@@ -238,3 +238,78 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit()
 });
+
+setInterval(() => {
+    child_process.exec('xwininfo -root -children -all', (err, stdout, stderr) => {
+        stdout.split('\n').forEach((window) => {
+
+            const parts = window.split(': (');
+            const pos = {
+                min: {
+                    x: 0,
+                    y: 0
+                },
+                max: {
+                    x: 0,
+                    y: 0
+                }
+            }
+
+            if (parts.length === 2 && parts[0].includes('"')){
+
+                const name = parts[0].split('"')[1];
+                const id = parts[0].trim().split(' ')[0];
+
+                child_process.exec(`xwininfo -id ${id}`, (err, stdout, stderr) => {
+
+                    const parts = stdout.split('\n')
+                    parts.splice(0,3);
+                    const mapped = {}
+                    parts.forEach((part) => {
+
+                        if (part.includes(':')){
+
+                            const keyValuePair = part.trim().split(':');
+                            mapped[keyValuePair[0].trim().replaceAll(' ', '_').replaceAll('-', '_').toLowerCase()] = keyValuePair[1].trim();
+
+                        }
+
+                    });
+                    mapped['id'] = id;
+                    mapped['name'] = name;
+
+                    console.log(mapped)
+
+                });
+
+
+            }
+        });
+    });
+}, 5000)
+
+/*
+{
+  absolute_upper_left_x: '0',
+  absolute_upper_left_y: '58',
+  relative_upper_left_x: '1',
+  relative_upper_left_y: '31',
+  width: '1920',
+  height: '1022',
+  depth: '24',
+  visual: '0x21',
+  visual_class: 'TrueColor',
+  border_width: '0',
+  class: 'InputOutput',
+  colormap: '0x20 (installed)',
+  bit_gravity_state: 'NorthWestGravity',
+  window_gravity_state: 'NorthWestGravity',
+  backing_store_state: 'NotUseful',
+  save_under_state: 'no',
+  map_state: 'IsViewable',
+  override_redirect_state: 'no',
+  corners: '+0+58  -0+58  -0-0  +0-0',
+  id: '0x3c00003',
+  name: 'main.js - Wallpaper - Visual Studio Code'
+}
+*/

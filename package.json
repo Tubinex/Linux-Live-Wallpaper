@@ -11,7 +11,8 @@
   "author": "Tubinex",
   "license": "ISC",
   "dependencies": {
-    "electron": "^21.1.1"
+    "electron": "^21.1.1",
+    "node-window-manager": "^2.2.4"
   },
   "devDependencies": {
     "electron-packager": "^16.0.0"

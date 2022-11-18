@@ -14,11 +14,5 @@ window.addEventListener('DOMContentLoaded', () => {
 
 	});
 
-	setInterval(() => {
-
-		ipcRenderer.send('print', document.visibilityState)
-
-	}, 100)
-
 });
 
