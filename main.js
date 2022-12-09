@@ -222,6 +222,8 @@ const createWallpaperWindow = () => {
         });
     });
 
+    wallpaperWindow.on('minimize', () => wallpaperWindow.maximize());
+
 }
 
 app.whenReady().then(() => {
