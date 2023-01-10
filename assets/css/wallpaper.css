@@ -1,6 +1,6 @@
 * {
 
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Rubik', sans-serif;
     user-select: none;
 
 }
@@ -65,5 +65,59 @@ video {
 
     background-color: rgba(255,255,255,255,0.1);
     transform: translateY(1px);
+
+}
+
+.widgets {
+
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 11;
+
+}
+
+.widgets .widget {
+
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    color: #fff;
+    text-align: center;
+
+    
+}
+
+.widgets .widget .day-name {
+
+    font-family: 'Anurati Regular';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 86px;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+
+}
+
+.widgets .widget .date {
+
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin: 10px 0px 0px 0px;
+    white-space: pre;
+
+}
+
+.widgets .widget .time {
+
+    font-size: 18px;
+    font-weight: 600;
+    margin: 8px 0px 0px 0px;
+    text-transform: uppercase;
+    white-space: pre;
 
 }

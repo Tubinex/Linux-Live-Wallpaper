@@ -206,6 +206,7 @@ const createWallpaperWindow = () => {
     wallpaperWindow.setSkipTaskbar(true);
     wallpaperWindow.setPosition(0, 0);
     wallpaperWindow.setBackgroundColor('black');
+    //wallpaperWindow.webContents.openDevTools({ mode: 'detach'})
 
     wallpaperWindow.on('ready-to-show', () => {
 
