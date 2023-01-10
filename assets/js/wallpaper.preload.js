@@ -14,18 +14,18 @@ const setClockInterval = () => {
 
 		const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 		const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-		day.innerText = dayNames[now.getDay()];
 
-		var hours = date.getHours();
-		var minutes = date.getMinutes();
-		var suffix = hours >= 12 ? 'OM' : 'AM';
-		hours = hours % 12;
+		var hours = now.getHours();
+		var minutes = now.getMinutes();
+		var suffix = hours >= 12 ? 'PM' : 'AM';
 		hours = hours ? hours : 12;
+		console.log("nuts")
 		minutes = minutes < 10 ? '0' + minutes : minutes;
 		var strTime = hours + ':' + minutes + suffix;
 		
 		time.innerText = `-   ${strTime}   -`;
-		date.innerText = `${now.getDate()}   ${monthNames[now.getMonth()]},   ${now.getFullYear()}`
+		date.innerText = `${now.getDate()}   ${monthNames[now.getMonth()]},   ${now.getFullYear()}`;
+		day.innerText = dayNames[now.getDay()];
 
 	}
 

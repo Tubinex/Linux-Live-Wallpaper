@@ -6,14 +6,15 @@
   "scripts": {
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "package-linux": "electron-packager . wallpaper --overwrite --asar=true --platform=linux --arch=x64 --prune=true --out=release-builds"
+    "package-linux": "electron-packager . wallpaper --overwrite --asar --platform=linux --arch=x64 --prune=true --out=release-builds",
+    "create-debian-installer": "electron-installer-debian --src release-builds/wallpaper-linux-x64 --arch amd64 --config debian.json"
   },
   "author": "Tubinex",
   "license": "ISC",
   "dependencies": {
-    "electron": "^21.1.1",
-    "node-window-manager": "^2.2.4"
+    "electron": "^21.1.1"
   },
+
   "devDependencies": {
     "electron-packager": "^16.0.0"
   }
