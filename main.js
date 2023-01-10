@@ -59,6 +59,7 @@ const getWallpapers = (callback) => {
 
 var wallpaperPicker;
 var wallpaperWindow;
+var wallpaperPaused = false;
 
 const makeTray = () => {
 
@@ -197,7 +198,8 @@ const createWallpaperWindow = () => {
             preload: path.join(__dirname, 'assets', 'js', 'wallpaper.preload.js'),
             webSecurity: false
         },
-        type: 'desktop'
+        type: 'desktop',
+        show: false
     });
     wallpaperWindow.setMenu(null);
     wallpaperWindow.loadFile(path.join(__dirname, 'assets', 'html', 'wallpaper.html'));
@@ -207,6 +209,7 @@ const createWallpaperWindow = () => {
 
     wallpaperWindow.on('ready-to-show', () => {
 
+        wallpaperWindow.showInactive()
         getWallpapers((wallpapers) => {
             if (config.src == null && wallpapers.length > 0){
 
@@ -242,54 +245,45 @@ app.on('window-all-closed', () => {
 });
 
 setInterval(() => {
-    child_process.exec('xwininfo -root -children -all', (err, stdout, stderr) => {
-        stdout.split('\n').forEach((window) => {
 
-            const parts = window.split(': (');
-            const pos = {
-                min: {
-                    x: 0,
-                    y: 0
-                },
-                max: {
-                    x: 0,
-                    y: 0
-                }
-            }
+    const primaryDisplay = screen.getPrimaryDisplay();
 
-            if (parts.length === 2 && parts[0].includes('"')){
+    child_process.exec('xdotool getwindowfocus getwindowgeometry --shell', (err, stdout, stderr) => {
+        const wininfo = stdout.split('\n');
+        const info = {}
+        wininfo.forEach((set) => {
 
-                const name = parts[0].split('"')[1];
-                const id = parts[0].trim().split(' ')[0];
+            const key = set.split('=')[0];
+            const val = set.split('=')[1];
 
-                child_process.exec(`xwininfo -id ${id}`, (err, stdout, stderr) => {
-
-                    const parts = stdout.split('\n')
-                    parts.splice(0,3);
-                    const mapped = {}
-                    parts.forEach((part) => {
-
-                        if (part.includes(':')){
-
-                            const keyValuePair = part.trim().split(':');
-                            mapped[keyValuePair[0].trim().replaceAll(' ', '_').replaceAll('-', '_').toLowerCase()] = keyValuePair[1].trim();
-
-                        }
-
-                    });
-                    mapped['id'] = id;
-                    mapped['name'] = name;
-
-                    console.log(mapped)
-
-                });
-
-
-            }
+            try {
+                if (key && val) info[key] = parseInt(val);
+            } catch (ignored){}
+            
         });
-    });
-}, 5000)
 
+        if (info.WIDTH === primaryDisplay.workAreaSize.width){
+
+            if (!wallpaperPaused) {
+
+                wallpaperWindow.webContents.send('pause');
+                wallpaperPaused = true;
+
+            }
+
+        } else {
+
+            if (wallpaperPaused) {
+
+                setTimeout(() => wallpaperWindow.webContents.send('resume'));
+                wallpaperPaused = false;
+
+            }
+                
+        }
+        
+    });
+}, 500);
 /*
 {
   absolute_upper_left_x: '0',

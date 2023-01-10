@@ -2,7 +2,19 @@ const { ipcRenderer } = require('electron')
 
 ipcRenderer.on('change-wallpaper', (event, data) => {
 
-	document.getElementsByTagName('video')[0].setAttribute('src', data.src)
+	document.getElementsByTagName('video')[0].setAttribute('src', data.src);
+
+});
+
+ipcRenderer.on('pause', (event, data) => {
+
+	document.getElementsByTagName('video')[0].pause()
+
+});
+
+ipcRenderer.on('resume', (event, data) => {
+
+	document.getElementsByTagName('video')[0].play()
 
 });
 
