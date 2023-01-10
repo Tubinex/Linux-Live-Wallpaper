@@ -275,7 +275,7 @@ setInterval(() => {
 
             if (wallpaperPaused) {
 
-                setTimeout(() => wallpaperWindow.webContents.send('resume'));
+                wallpaperWindow.webContents.send('resume');
                 wallpaperPaused = false;
 
             }
