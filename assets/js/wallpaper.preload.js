@@ -18,8 +18,8 @@ const setClockInterval = () => {
 		var hours = now.getHours();
 		var minutes = now.getMinutes();
 		var suffix = hours >= 12 ? 'PM' : 'AM';
+		hours %= 12;
 		hours = hours ? hours : 12;
-		console.log("nuts")
 		minutes = minutes < 10 ? '0' + minutes : minutes;
 		var strTime = hours + ':' + minutes + suffix;
 		
