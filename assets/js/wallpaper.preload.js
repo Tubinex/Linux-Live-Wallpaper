@@ -15,7 +15,7 @@ const setClockInterval = () => {
 		const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 		const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-		var hours = now.getHours();
+		var hours = now.getHours();	
 		var minutes = now.getMinutes();
 		var suffix = hours >= 12 ? 'PM' : 'AM';
 		hours %= 12;
@@ -26,7 +26,7 @@ const setClockInterval = () => {
 		time.innerText = `-   ${strTime}   -`;
 		date.innerText = `${now.getDate()}   ${monthNames[now.getMonth()]},   ${now.getFullYear()}`;
 		day.innerText = dayNames[now.getDay()];
-
+		
 	}
 
 	if (clockInterval !== undefined && clockInterval !== null){

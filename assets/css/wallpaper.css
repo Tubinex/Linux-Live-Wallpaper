@@ -93,31 +93,43 @@ video {
 
 .widgets .widget .day-name {
 
+    --letter-spacing: 60px;
+        
     font-family: 'Anurati Regular';
     font-weight: normal;
     font-style: normal;
     font-size: 86px;
-    letter-spacing: 8px;
+    letter-spacing: var(--letter-spacing);
+    text-align: center;
+    padding: 0px 0px 0px calc(var(--letter-spacing) / 2);
     text-transform: uppercase;
 
 }
 
 .widgets .widget .date {
 
+    --letter-spacing: 12px;
+
     font-size: 18px;
     font-weight: 600;
     text-transform: uppercase;
-    margin: 10px 0px 0px 0px;
+    margin: 32px 0px 0px 0px;
     white-space: pre;
+    letter-spacing: var(--letter-spacing);
+    padding: 0px 0px 0px calc(var(--letter-spacing) / 2);
 
 }
 
 .widgets .widget .time {
 
+    --letter-spacing: 10px;
+
     font-size: 18px;
     font-weight: 600;
-    margin: 8px 0px 0px 0px;
+    margin: 32px 0px 0px 0px;
     text-transform: uppercase;
     white-space: pre;
+    letter-spacing: var(--letter-spacing);
+    padding: 0px 0px 0px calc(var(--letter-spacing) / 2);
 
 }
