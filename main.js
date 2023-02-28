@@ -209,8 +209,7 @@ const createWallpaperWindow = () => {
 
     wallpaperWindow.on('ready-to-show', () => {
 
-        wallpaperWindow.showInactive()
-        wallpaperWindow.webContents.openDevTools({ mode: 'detach', activate: false })
+        wallpaperWindow.showInactive();
         getWallpapers((wallpapers) => {
             if (config.src == null && wallpapers.length > 0){
 
